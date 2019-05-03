@@ -67,3 +67,36 @@ function matrizAdj() {
 function trim(vlr) {
     return vlr.replace("\n","");
 }
+
+function getJson() {
+    var jqxhr = $.getJSON("grafo.json", function (data) {
+        console.log("Pegamo o grafo");
+    })
+        .done(function (data) {
+            criarMatriz(data);
+            
+        })
+        .fail(function () {
+            console.log("Não deu para achar o grafo, malz");
+        });
+}
+
+function criarMatriz(data){
+    const qnt = data.qnt;
+    const pesos = [];
+    let max = [];
+    for (let i = 0; i < (qnt*qnt); i++) {
+        max[i] = 0;
+    }
+    for (let i = 0; i < qnt; i++) {
+        let v1 = data.conteudo[i][0];
+        let v2 = data.conteudo[i][1];
+        let v3 = data.conteudo[i][2];
+        max[v1][v2] = 1;
+        if(data.grafo){
+            max[v2][v1] = 1;
+        }
+        pesos.push(v3);
+    }
+    console.log(max);   
+}
