@@ -84,7 +84,7 @@ function getJson() {
 function criarMatriz(data){
     const qnt = data.qnt;
     const pesos = [];
-    let max = [];
+    let max = [][];
     for (let i = 0; i < (qnt*qnt); i++) {
         max[i] = 0;
     }
