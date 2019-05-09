@@ -50,7 +50,7 @@
                             <br>
                             <div class="divider"></div>
                             <br>
-                            RA:
+                            RA: 171253604
                         </h6>
                         <h3 class="infos">Teoria dos Grados <br>
                             Ciência da Computação, FCT/UNESP <br>
@@ -77,31 +77,52 @@
         <div class="divider"></div>
         <h3>Selecione o arquivo com o grafo desejado:</h3>
         </br>
-        <input type="file" id="txtfiletoread" /><br />
-        <div id="filecontents"></div>
+        <!-- <input type="file" id="txtfiletoread" /><br />
+        <div id="filecontents"></div> -->
         </br>
         <div class="row">
-            <a onclick="matrizAdj()" class="waves-effect waves-light btn-large col s12 modal-trigger"
-                href="#modal3">MATRIZ
+            <a class="waves-effect waves-light btn-large col s12 modal-trigger" href="#modal3">MATRIZ
                 DE ADJACÊNCIA</a>
-            <a class="waves-effect waves-light btn-large col s12">LISTA DE ADJACÊNCIA</a>
+            <a class="waves-effect waves-light btn-large col s12 modal-trigger" href="#modal4">LISTA DE ADJACÊNCIA</a>
         </div>
 
         <div id="modal3" class="modal">
             <div class="modal-content">
-                <div id="teste"></div>
-                <p>Quantidade de vértices: </p>
-                <div id="qtvert"></div>
+                <h4>Escolha uma função: </h4>
+                <ul>
+                    <li><a onclick="dfs(grafo)" class="waves-effect waves-light btn-large col s12 modal-trigger"
+                            href="#modal4">DFS</a></a></li>
+                    <li><a onclick="bfs(grafo, 0)" class="waves-effect waves-light btn-large col s12 modal-trigger"
+                            href="#modal5">BFS</a></a></li>
+                </ul>
+
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">FECHAR</a>
+            </div>
+        </div>
+        <div id="modal4" class="modal">
+            <div class="modal-content">
+                <h4>Ordem da descoberta dos vértices: </h4>
+                <p id="ordem">Resultado: </p>
+            </div>
+        </div>
+        <div id="modal5" class="modal">
+            <div class="modal-content">
+                <h4>Distancia da raíz até cada vértice: </h4>
+                <p id="largura">Resultado: </p>
             </div>
         </div>
 
     </div>
 
-    <footer>
-
-    </footer>
     <script>
-        getJson();
+        const grafo = [[0, 0, 4, 23, 60],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 4, 0],
+        [0, 10, 0, 0, 0],
+        [0, 0, 15, 0, 0]];
+        execute($('body'));
     </script>
 </body>
 

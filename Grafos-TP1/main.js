@@ -1,40 +1,35 @@
 //script main.js
 var texto;
+let $body;
 
-class Queue 
-{ 
+class Queue {
     // Array is used to implement a Queue 
-    constructor() 
-    { 
-        this.items = []; 
-    } 
-                  
+    constructor() {
+        this.items = [];
+    }
+
     // Functions to be implemented 
-    enqueue(element){
+    enqueue(element) {
         this.items.push(element);
-    } 
-    dequeue(){
+    }
+    dequeue() {
         if (this.isEmpty()) {
             return 'Deu Ruim = vazio'
         }
         return this.items.shift();
     }
     // front() 
-    isEmpty(){
+    isEmpty() {
         return this.items.length == 0;
-    } 
+    }
     // printQueue() 
-} 
+}
 
-const grafo = [[0, 0, 4, 23, 60], 
-               [0, 0, 0, 0, 0],
-               [0, 0, 0, 4, 0],
-               [0, 10, 0, 0, 0],
-               [0, 0, 15, 0, 0]];
 
-// $(document).ready(function () {
-//     $('.modal').modal();
-// });
+
+$(document).ready(function () {
+    $('.modal').modal();
+});
 
 
 // window.onload = function () {
@@ -76,16 +71,27 @@ function trim(vlr) {
     return vlr.replace("\n", "");
 }
 
+function execute(body) {
 
-function bfs(grafo, raiz){ //pedir raiz
+    $body = body;
+
+    $(body).ready(function () {
+        console.log($('#ordem'));
+    });
+
+
+
+}
+
+function bfs(grafo, raiz) { //pedir raiz
     let cor = [];
-    let d   = []; 
-    let pi   = [];
+    let d = [];
+    let pi = [];
     for (let i = 0; i < grafo.length; i++) {
-        if(i != raiz){
+        if (i != raiz) {
             cor[i] = 'BRANCO';
             d[i] = Number.MAX_SAFE_INTEGER;
-            pi[i] = null; 
+            pi[i] = null;
         }
     }
     cor[raiz] = 'CINZA';
@@ -96,9 +102,9 @@ function bfs(grafo, raiz){ //pedir raiz
     fila.enqueue(raiz);
     while (!fila.isEmpty()) {
         let u = fila.dequeue();
-        for(let v = 0; v < grafo.length; v++) {
-            if(grafo[u][v] != 0) {
-                if(cor[v] == 'BRANCO'){
+        for (let v = 0; v < grafo.length; v++) {
+            if (grafo[u][v] != 0) {
+                if (cor[v] == 'BRANCO') {
                     cor[v] = 'CINZA';
                     d[v] = d[u] + 1;
                     pi[v] = u;
@@ -109,43 +115,53 @@ function bfs(grafo, raiz){ //pedir raiz
         cor[u] = 'PRETO';
 
     }
-    return d;
+    let largura = "Ordem: ";
+    for (let i = 0; i < grafo.length; i++) {
+        largura += raiz + " -> " + i + " = " + d[i] + "  ||  ";
+    }
+    let $link = $('#largura');
+    $link.text(largura);
 }
 
 function dfs(grafo) {
+    let ordEncontro = [];
     let cor = [];
     let d = [];
     let f = [];
-    for(let u = 0; u < grafo.length; u++){
+    for (let u = 0; u < grafo.length; u++) {
         cor[u] = "BRANCO";
     }
     let tempo = 0;
     for (let u = 0; u < grafo.length; u++) {
-        if(cor[u] == "BRANCO"){
-            dfs_visit(u, f, d, cor, tempo, grafo);
+        if (cor[u] == "BRANCO") {
+            dfs_visit(u, f, d, cor, tempo, grafo, ordEncontro);
+
+
         }
     }
-    console.log(cor);
-    
+    let ordem = "Ordem: " + ordEncontro;
+    let $link = $('#ordem');
+    $link.text(ordem);
+
 }
 
-function dfs_visit(u, f, d, cor, tempo, grafo) {
+function dfs_visit(u, f, d, cor, tempo, grafo, ordEncontro) {
     cor[u] = "CINZA";
     tempo++;
     d[u] = tempo;
-    for(let v = 0; v < grafo.length; v++){
-        if(grafo[u][v] != 0){
-            if(cor[v] == 'BRANCO'){
-                dfs_visit(v, f, d, cor, tempo, grafo);
+    for (let v = 0; v < grafo.length; v++) {
+        if (grafo[u][v] != 0) {
+            if (cor[v] == 'BRANCO') {
+                dfs_visit(v, f, d, cor, tempo, grafo, ordEncontro);
             }
         }
     }
     cor[u] = "PRETO";
     f[u] = tempo++;
+    ordEncontro.unshift(u);
+
+
 }
-
-dfs(grafo);
-
 // function matrizAdj() {
 
 //     var qtvert = parseInt(texto.charAt(3));
