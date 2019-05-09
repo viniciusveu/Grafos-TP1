@@ -83,7 +83,8 @@ function execute(body) {
 
 }
 
-function bfs(grafo, raiz) { //pedir raiz
+function bfs(grafo) { //pedir raiz
+    let raiz = prompt("Entre com o vértice raíz: ");
     let cor = [];
     let d = [];
     let pi = [];
@@ -125,6 +126,7 @@ function bfs(grafo, raiz) { //pedir raiz
 
 function dfs(grafo) {
     let ordEncontro = [];
+    let ordCinza = [];
     let cor = [];
     let d = [];
     let f = [];
@@ -134,25 +136,27 @@ function dfs(grafo) {
     let tempo = 0;
     for (let u = 0; u < grafo.length; u++) {
         if (cor[u] == "BRANCO") {
-            dfs_visit(u, f, d, cor, tempo, grafo, ordEncontro);
-
-
+            dfs_visit(u, f, d, cor, tempo, grafo, ordEncontro, ordCinza);
         }
     }
-    let ordem = "Ordem: " + ordEncontro;
-    let $link = $('#ordem');
+    let ordem = "Ordem Cinza: " + ordCinza;
+    let $link = $('#ordemCinza');
+    $link.text(ordem);
+    ordem = "Ordem preto: " + ordEncontro;
+    $link = $('#ordem');
     $link.text(ordem);
 
 }
 
-function dfs_visit(u, f, d, cor, tempo, grafo, ordEncontro) {
+function dfs_visit(u, f, d, cor, tempo, grafo, ordEncontro, ordCinza) {
     cor[u] = "CINZA";
+    ordCinza.push(u);
     tempo++;
     d[u] = tempo;
     for (let v = 0; v < grafo.length; v++) {
         if (grafo[u][v] != 0) {
             if (cor[v] == 'BRANCO') {
-                dfs_visit(v, f, d, cor, tempo, grafo, ordEncontro);
+                dfs_visit(v, f, d, cor, tempo, grafo, ordEncontro, ordCinza);
             }
         }
     }
