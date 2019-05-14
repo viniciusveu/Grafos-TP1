@@ -78,7 +78,7 @@ function execute(body) {
     $body = body;
 
     $(body).ready(function () {
-        console.log($('#ordem'));
+        //console.log($('#ordem'));
     });
 
     $(document).ready(function () {
@@ -173,7 +173,8 @@ function dfs(grafo) {
     ordem = "Ordem preto: " + ordEncontro;
     $link = $('#ordem');
     $link.text(ordem);    
-
+    console.log(f+d);
+    
 }
 
 function dfs_visit(u, f, d, cor, tempo, grafo, ordEncontro, ordCinza) {
