@@ -14,7 +14,8 @@ class Queue {
     }
     dequeue() {
         if (this.isEmpty()) {
-            return 'Deu Ruim = vazio'
+            return console.error();
+
         }
         return this.items.shift();
     }
@@ -29,6 +30,9 @@ class Queue {
 
 $(document).ready(function () {
     $('.modal').modal();
+});
+$(document).ready(function () {
+    $('select').formSelect();
 });
 
 
@@ -67,9 +71,7 @@ $(document).ready(function () {
 //     }
 // }
 
-function trim(vlr) {
-    return vlr.replace("\n", "");
-}
+
 
 function execute(body) {
 
@@ -79,15 +81,36 @@ function execute(body) {
         console.log($('#ordem'));
     });
 
-
+    $(document).ready(function () {
+        M.updateTextFields();
+        $('select').formSelect();
+    });
 
 }
 
-function bfs(grafo) { //pedir raiz
-    let raiz = prompt("Entre com o vértice raíz: ");
+function trim(vlr) {
+    return vlr.replace("\n", "");
+}
+
+function busca() {
+    let x = document.getElementById("op").value;
+    let u = document.getElementById("u").value;
+    let v = document.getElementById("v").value;
+    if (x == 1) dfs(grafo);
+    else if (x == 2) bfs(grafo, u, v);
+    else console.error();
+}
+
+function chamarBFS(grafo) {
+    let raiz = prompt("Entre com o vértice raíz para a BFS: ");
+    bfs(grafo, raiz, null);
+}
+
+function bfs(grafo, raiz, dest) {
     let cor = [];
     let d = [];
     let pi = [];
+
     for (let i = 0; i < grafo.length; i++) {
         if (i != raiz) {
             cor[i] = 'BRANCO';
@@ -114,7 +137,11 @@ function bfs(grafo) { //pedir raiz
             }
         }
         cor[u] = 'PRETO';
-
+        if (dest != null) {
+            if (u == dest) document.getElementById("teste").innerHTML = "chegamos ao v";
+            else console.log(u);
+            
+        }
     }
     let largura = "Ordem: ";
     for (let i = 0; i < grafo.length; i++) {
@@ -125,6 +152,7 @@ function bfs(grafo) { //pedir raiz
 }
 
 function dfs(grafo) {
+    let raiz = prompt("Entre com o vértice raíz para a DFS: ");
     let ordEncontro = [];
     let ordCinza = [];
     let cor = [];
@@ -134,7 +162,7 @@ function dfs(grafo) {
         cor[u] = "BRANCO";
     }
     let tempo = 0;
-    for (let u = 0; u < grafo.length; u++) {
+    for (let u = raiz; u < grafo.length; u++) {
         if (cor[u] == "BRANCO") {
             dfs_visit(u, f, d, cor, tempo, grafo, ordEncontro, ordCinza);
         }
@@ -144,13 +172,13 @@ function dfs(grafo) {
     $link.text(ordem);
     ordem = "Ordem preto: " + ordEncontro;
     $link = $('#ordem');
-    $link.text(ordem);
+    $link.text(ordem);    
 
 }
 
 function dfs_visit(u, f, d, cor, tempo, grafo, ordEncontro, ordCinza) {
     cor[u] = "CINZA";
-    ordCinza.push(u);
+    ordCinza.unshift(u);
     tempo++;
     d[u] = tempo;
     for (let v = 0; v < grafo.length; v++) {

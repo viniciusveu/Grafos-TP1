@@ -52,6 +52,7 @@
                             <br>
                             RA: 171253604
                         </h6>
+
                         <h3 class="infos">Teoria dos Grados <br>
                             Ciência da Computação, FCT/UNESP <br>
                             Professor <a
@@ -73,57 +74,121 @@
             </div>
 
     </reader>
+
     <div class="container">
         <div class="divider"></div>
         <h3>Selecione o arquivo com o grafo desejado:</h3>
         </br>
-        <!-- <input type="file" id="txtfiletoread" /><br />
-        <div id="filecontents"></div> -->
-        </br>
+        <form action="#">
+            <div class="file-field input-field col s5">
+                <div class="btn">
+                    <span class="txt"> ABRIR GRAFO</span>
+                    <input type="file" id="txtToRead">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+
+            </div>
+        </form>
+
         <div class="row">
-            <a class="waves-effect waves-light btn-large col s12 modal-trigger" href="#modal3">MATRIZ
+            <a class="txt waves-effect waves-light btn-large col s12 modal-trigger" href="#modalMat">MATRIZ
                 DE ADJACÊNCIA</a>
-            <a class="waves-effect waves-light btn-large col s12 modal-trigger" href="#modal4">LISTA DE ADJACÊNCIA</a>
+            <a class="txt waves-effect waves-light btn-large col s12 modal-trigger" href="#modalList">LISTA DE
+                ADJACÊNCIA</a>
         </div>
 
-        <div id="modal3" class="modal">
+        <div id="modalMat" class="modal bottom-sheet">
             <div class="modal-content">
-                <h4>Escolha uma função: </h4>
+                <h4 class="txt">Escolha uma função: </h4>
                 <ul>
-                    <li><a onclick="dfs(grafo)" class="waves-effect waves-light btn-large col s12 modal-trigger"
-                            href="#modal4">DFS</a></a></li>
-                    <li><a onclick="bfs(grafo)" class="waves-effect waves-light btn-large col s12 modal-trigger"
-                            href="#modal5">BFS</a></a></li>
+                    <li><a onclick="dfs(grafo)" class="txt waves-effect waves-light btn-large col s12 modal-trigger"
+                            href="#modaldfs">DFS - Busca em Profundidade</a></a></li>
+                    <li><a onclick="chamarBFS(grafo)"
+                            class="txt waves-effect waves-light btn-large col s12 modal-trigger" href="#modalbfs">BFS -
+                            Busca em Largura</a></a></li>
+                    <li><a class="txt waves-effect waves-light btn-large col s12 modal-trigger"
+                            href="#modalbusca">Caminho
+                            entre dois vértices</a></li>
+                    <li><a class="txt waves-effect waves-light btn-large col s12 modal-trigger"
+                            href="#modalconexo">Verificar
+                            se é conexo</a></li>
                 </ul>
 
             </div>
             <div class="modal-footer">
-                <a href="#!" class="modal-close waves-effect waves-green btn-flat">FECHAR</a>
+                <a href="#!" class="modal-close waves-effect waves-green btn-flatt">FECHAR</a>
             </div>
         </div>
-        <div id="modal4" class="modal">
+
+        <div id="modaldfs" class="modal modal-fixed-footer">
             <div class="modal-content">
                 <h4>Ordem da descoberta dos vértices: </h4>
                 <p id="ordemCinza">Resultado final: </p>
                 <p id="ordem">Resultado final: </p>
             </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">FECHAR</a>
+            </div>
         </div>
-        <div id="modal5" class="modal">
+
+        <div id="modalbfs" class="modal">
             <div class="modal-content">
                 <h4>Distancia da raíz até cada vértice: </h4>
                 <p id="largura">Resultado: </p>
             </div>
         </div>
 
+        <div id="modalbusca" class="modal">
+            <div class="modal-content">
+
+                <h4 class="txt">Entre com dois vértices para fazer a verificação do caminho:</h4>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input value="0" id="u" type="number" class="validate">
+                        <label class="active" for="u">Vértice 1</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input value="0" id="v" type="number" class="validate">
+                        <label class="active" for="v">Vértice 2</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select id="op">
+                            <option value="" disabled selected>Escolha uma opção</option>
+                            <option value="1">DFS - Profundidade</option>
+                            <option value="2">BFS - Largura</option>
+                        </select>
+                        <label>Selecione o algoritmo de busca</label>
+                    </div>
+                    <p id="teste"></p>
+                    <a onclick="busca()" class="txt waves-effect waves-light btn-small">BUSCA</a>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="modalconexo" class="modal">
+            <div class="modal-content">
+
+            </div>
+        </div>
+
     </div>
 
     <script>
-        const grafo = [[0, 0, 4, 23, 60],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 4, 0],
-        [0, 10, 0, 0, 0],
-        [0, 0, 15, 0, 0]];
+        const grafo =
+            [[0, 0, 4, 23, 60],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 4, 0],
+            [0, 10, 0, 0, 0],
+            [0, 0, 15, 0, 0]];
         execute($('body'));
+
     </script>
 </body>
 
