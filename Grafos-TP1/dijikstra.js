@@ -25,6 +25,7 @@ class dijikstra{
     }
     
     relaxa(u,v){
+        console.log("grafo [u][v] = " + this.grafo[u][v]);
         let w = this.dist[u] + this.grafo[u][v];
         if(this.dist[u] > w ){
             this.dist[v] = w;
@@ -38,8 +39,10 @@ class dijikstra{
             this.prov[i] = this.grafo[i];
         }
         let size = this.prov.length;
-        while(size != 0){
-            let u = this.minimo(this.prov[this.s]);
+        while(size != 0){ //wtf esse while -----------
+            console.log("Q = "+ this.prov[this.s]);
+            let u = this.minimo(this.prov[this.s]); 
+            console.log("u = "+ u);
             this.def.push(u);
             for (let i = 0; i < this.prov.length; i++) {
                 for (let v = 0; v < this.prov.length; v++) {
@@ -80,10 +83,9 @@ class dijikstra{
     //     }
     // }
 }
-let objeto = new dijikstra(grafo);
+let objeto = new dijikstra(grafo, 0);
 // let teste = objeto.minimo(vetor);
-objeto.menorCusto(0);
-console.log(objeto);
+objeto.menorCusto();
 
 
 
