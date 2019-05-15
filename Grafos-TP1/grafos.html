@@ -12,6 +12,7 @@
     <script type="text/javascript" src="jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="main.js"></script>
+    <script src="busca.js"></script>
 </head>
 
 <body>
@@ -82,7 +83,7 @@
         <form action="#">
             <div class="file-field input-field col s5">
                 <div class="btn">
-                    <span class="txt"> ABRIR GRAFO</span>
+                    <span class="txt">ABRIR GRAFO</span>
                     <input type="file" id="txtToRead">
                 </div>
                 <div class="file-path-wrapper">
@@ -103,9 +104,9 @@
             <div class="modal-content">
                 <h4 class="txt">Escolha uma função: </h4>
                 <ul>
-                    <li><a onclick="dfs(grafo)" class="txt waves-effect waves-light btn-large col s12 modal-trigger"
+                    <li><a onclick="objBusca.chamarDFS(grafo)" class="txt waves-effect waves-light btn-large col s12 modal-trigger"
                             href="#modaldfs">DFS - Busca em Profundidade</a></a></li>
-                    <li><a onclick="chamarBFS(grafo)"
+                    <li><a onclick="objBusca.chamarBFS(grafo)"
                             class="txt waves-effect waves-light btn-large col s12 modal-trigger" href="#modalbfs">BFS -
                             Busca em Largura</a></a></li>
                     <li><a class="txt waves-effect waves-light btn-large col s12 modal-trigger"
@@ -125,8 +126,7 @@
         <div id="modaldfs" class="modal modal-fixed-footer">
             <div class="modal-content">
                 <h4>Ordem da descoberta dos vértices: </h4>
-                <p id="ordemCinza">Resultado final: </p>
-                <p id="ordem">Resultado final: </p>
+                <p id="dfs_reultado"></p>
             </div>
             <div class="modal-footer">
                 <a href="#!" class="modal-close waves-effect waves-green btn-flat">FECHAR</a>
@@ -136,7 +136,7 @@
         <div id="modalbfs" class="modal">
             <div class="modal-content">
                 <h4>Distancia da raíz até cada vértice: </h4>
-                <p id="largura">Resultado: </p>
+                <p id="bfs_reultado"></p>
             </div>
         </div>
 
@@ -160,13 +160,13 @@
                     <div class="input-field col s12">
                         <select id="op">
                             <option value="" disabled selected>Escolha uma opção</option>
-                            <option value="1">DFS - Profundidade</option>
-                            <option value="2">BFS - Largura</option>
+                            <option value="0">DFS - Profundidade</option>
+                            <option value="1">BFS - Largura</option>
                         </select>
                         <label>Selecione o algoritmo de busca</label>
                     </div>
-                    <p id="teste"></p>
-                    <a onclick="busca()" class="txt waves-effect waves-light btn-small">BUSCA</a>
+                    <p id="caminho_result"></p>
+                    <a onclick="objBusca.busca()" class="txt waves-effect waves-light btn-small">BUSCA</a>
                 </div>
 
             </div>
@@ -188,7 +188,7 @@
             [0, 10, 0, 0, 0],
             [0, 0, 15, 0, 0]];
         execute($('body'));
-
+        let objBusca = new Busca();
     </script>
 </body>
 

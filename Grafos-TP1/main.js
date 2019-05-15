@@ -2,38 +2,33 @@
 var texto;
 let $body;
 
-class Queue {
-    // Array is used to implement a Queue 
-    constructor() {
-        this.items = [];
-    }
-
-    // Functions to be implemented 
-    enqueue(element) {
-        this.items.push(element);
-    }
-    dequeue() {
-        if (this.isEmpty()) {
-            return console.error();
-
-        }
-        return this.items.shift();
-    }
-    // front() 
-    isEmpty() {
-        return this.items.length == 0;
-    }
-    // printQueue() 
-}
-
 
 
 $(document).ready(function () {
     $('.modal').modal();
 });
+
 $(document).ready(function () {
     $('select').formSelect();
 });
+
+
+
+function execute(body) {
+
+    $body = body;
+
+    $(body).ready(function () {
+        //console.log($('#ordem'));
+    });
+
+    $(document).ready(function () {
+        M.updateTextFields();
+        $('select').formSelect();
+    });
+
+}
+
 
 
 // window.onload = function () {
@@ -70,131 +65,11 @@ $(document).ready(function () {
 //         alert("Arquivo(s) não suportado(s)");
 //     }
 // }
+// function trim(vlr) {
+//     return vlr.replace("\n", "");
+// }
 
 
-
-function execute(body) {
-
-    $body = body;
-
-    $(body).ready(function () {
-        //console.log($('#ordem'));
-    });
-
-    $(document).ready(function () {
-        M.updateTextFields();
-        $('select').formSelect();
-    });
-
-}
-
-function trim(vlr) {
-    return vlr.replace("\n", "");
-}
-
-function busca() {
-    let x = document.getElementById("op").value;
-    let u = document.getElementById("u").value;
-    let v = document.getElementById("v").value;
-    if (x == 1) dfs(grafo);
-    else if (x == 2) bfs(grafo, u, v);
-    else console.error();
-}
-
-function chamarBFS(grafo) {
-    let raiz = prompt("Entre com o vértice raíz para a BFS: ");
-    bfs(grafo, raiz, null);
-}
-
-function bfs(grafo, raiz, dest) {
-    let cor = [];
-    let d = [];
-    let pi = [];
-
-    for (let i = 0; i < grafo.length; i++) {
-        if (i != raiz) {
-            cor[i] = 'BRANCO';
-            d[i] = Number.MAX_SAFE_INTEGER;
-            pi[i] = null;
-        }
-    }
-    cor[raiz] = 'CINZA';
-    d[raiz] = 0;
-    pi[raiz] = null;
-
-    let fila = new Queue();
-    fila.enqueue(raiz);
-    while (!fila.isEmpty()) {
-        let u = fila.dequeue();
-        for (let v = 0; v < grafo.length; v++) {
-            if (grafo[u][v] != 0) {
-                if (cor[v] == 'BRANCO') {
-                    cor[v] = 'CINZA';
-                    d[v] = d[u] + 1;
-                    pi[v] = u;
-                    fila.enqueue(v);
-                }
-            }
-        }
-        cor[u] = 'PRETO';
-        if (dest != null) {
-            if (u == dest) document.getElementById("teste").innerHTML = "chegamos ao v";
-            else console.log(u);
-            
-        }
-    }
-    let largura = "Ordem: ";
-    for (let i = 0; i < grafo.length; i++) {
-        largura += raiz + " -> " + i + " = " + d[i] + "  ||  ";
-    }
-    let $link = $('#largura');
-    $link.text(largura);
-}
-
-function dfs(grafo) {
-    let raiz = prompt("Entre com o vértice raíz para a DFS: ");
-    let ordEncontro = [];
-    let ordCinza = [];
-    let cor = [];
-    let d = [];
-    let f = [];
-    for (let u = 0; u < grafo.length; u++) {
-        cor[u] = "BRANCO";
-    }
-    let tempo = 0;
-    for (let u = raiz; u < grafo.length; u++) {
-        if (cor[u] == "BRANCO") {
-            dfs_visit(u, f, d, cor, tempo, grafo, ordEncontro, ordCinza);
-        }
-    }
-    let ordem = "Ordem Cinza: " + ordCinza;
-    let $link = $('#ordemCinza');
-    $link.text(ordem);
-    ordem = "Ordem preto: " + ordEncontro;
-    $link = $('#ordem');
-    $link.text(ordem);    
-    console.log(f+d);
-    
-}
-
-function dfs_visit(u, f, d, cor, tempo, grafo, ordEncontro, ordCinza) {
-    cor[u] = "CINZA";
-    ordCinza.unshift(u);
-    tempo++;
-    d[u] = tempo;
-    for (let v = 0; v < grafo.length; v++) {
-        if (grafo[u][v] != 0) {
-            if (cor[v] == 'BRANCO') {
-                dfs_visit(v, f, d, cor, tempo, grafo, ordEncontro, ordCinza);
-            }
-        }
-    }
-    cor[u] = "PRETO";
-    f[u] = tempo++;
-    ordEncontro.unshift(u);
-
-
-}
 // function matrizAdj() {
 
 //     var qtvert = parseInt(texto.charAt(3));
