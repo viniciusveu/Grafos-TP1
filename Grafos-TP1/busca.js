@@ -86,11 +86,11 @@ class Busca {
     chamarBFS(grafo) {
         // let raiz = prompt("Entre com o vértice raíz para a BFS: ");
         let raiz = 0;
-        this.bfs(grafo, raiz, null);
+        this.bfs(grafo, raiz);
     }
 
 
-    bfs(grafo, raiz, dest) {
+    bfs(grafo, raiz) {
         let cor = [];
         let d = [];
         let pi = [];
@@ -115,6 +115,7 @@ class Busca {
                     if (cor[v] == 'BRANCO') {
                         cor[v] = 'CINZA';
                         d[v] = d[u] + 1;
+                        //caminho.push(u);
                         pi[v] = u;
                         fila.enqueue(v);
                     }
@@ -122,9 +123,22 @@ class Busca {
             }
             cor[u] = 'PRETO';
         }
+        for (let u = 0; grafo.length; u++) {
+            let i=0;
+            let v = u;
+            while (i < d[u]) {
+                caminho.push(v);
+                v = pi[v]; i++;
+            }
+            console.log("Caminho do vertice "+u+" até "+raiz+" é: "+caminho+"<br>");
+            caminho.splice(0,caminho.length);
+        }
+        //console.log(pi);
         
     }
 }
+
+
 
 class Queue {
     // Array is used to implement a Queue 
