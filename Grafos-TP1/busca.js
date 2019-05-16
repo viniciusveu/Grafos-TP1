@@ -1,9 +1,9 @@
 
-
 let tempo, cor = [];
+let d = []; pi = [];
 let tempo_chegada = [];
 let tempo_finalizacao = [];
-let caminho = [];
+
 
 class Busca {
 
@@ -13,30 +13,20 @@ class Busca {
         let v = document.getElementById("v").value;
         //let x = 0, u = 4, v =1;
         if (x == 0) this.caminhoDFS(grafo, u, v);
-        else if (x == 1) this.bfs(grafo, u, v);
+        else if (x == 1) this.caminhoBFS(grafo, u, v);
         else console.error();
     }
 
-    caminhoDFS(grafo, u, v) {
-        for (let x = 0; x < grafo.length; x++) {
-            cor[x] = 'BRANCO';
-        }
-
-        this.dfs_visit(grafo, u, v);
-
-    }
-
-
     chamarDFS(grafo) {
         let raiz = prompt("Entre com o vértice raíz para a DFS: ");
-        //let raiz = 2;
+        //let raiz = 2; 
         this.dfs(grafo, raiz);
         let txtDesc = " ", txtFin = " ";
         for (let i = 0; i < grafo.length; i++) {
             txtDesc = txtDesc + "O vértice " + i + " foi descoberto no instante " + tempo_chegada[i] + "<br>";
             txtFin = txtFin + "O vértice " + i + " foi finalizado no instante " + tempo_finalizacao[i] + "<br>";
         }
-        document.getElementById("dfs_reultado").innerHTML = txtDesc + "<br>" + txtFin;
+        document.getElementById("dfs_resultado").innerHTML = txtDesc + "<br>" + txtFin;
     }
 
     dfs(grafo, raiz) {
@@ -55,13 +45,6 @@ class Busca {
                 this.dfs_visit(grafo, u, null);
             }
         }
-        // let ordem = "Ordem Cinza: " + ordCinza;
-        // let $link = $('#ordemCinza');
-        // $link.text(ordem);
-        // ordem = "Ordem preto: " + ordEncontro;
-        // $link = $('#ordem');
-        // $link.text(ordem);
-        // console.log(f + d);
     }
 
     dfs_visit(grafo, u, dest) {
@@ -84,27 +67,30 @@ class Busca {
 
 
     chamarBFS(grafo) {
-        // let raiz = prompt("Entre com o vértice raíz para a BFS: ");
-        let raiz = 0;
+        let raiz = prompt("Entre com o vértice raíz para a BFS: ");
+        //let raiz = 0;
         this.bfs(grafo, raiz);
+        let txtDist = "<h4>Vértice  ->  Distância até a raiz(" + raiz + ")<h4> <br>";
+        for (let i = 0; i < grafo.length; i++) {
+            if (d[i] == Number.MAX_SAFE_INTEGER) txtDist = txtDist + i + "   ->     " + "n/a" + "<br>";
+            else txtDist = txtDist + i + "   ->     " + d[i] + "<br>";
+        }
+        document.getElementById("bfs_resultado").innerHTML = txtDist;
+        //let caminho = this.caminhoBFS(grafo);
+        console.log(pi);
+
     }
 
 
     bfs(grafo, raiz) {
-        let cor = [];
-        let d = [];
-        let pi = [];
 
         for (let i = 0; i < grafo.length; i++) {
-            if (i != raiz) {
-                cor[i] = 'BRANCO';
-                d[i] = Number.MAX_SAFE_INTEGER;
-                pi[i] = null;
-            }
+            cor[i] = 'BRANCO';
+            d[i] = Number.MAX_SAFE_INTEGER;
+            pi[i] = null;
         }
         cor[raiz] = 'CINZA';
         d[raiz] = 0;
-        pi[raiz] = null;
 
         let fila = new Queue();
         fila.enqueue(raiz);
@@ -115,7 +101,6 @@ class Busca {
                     if (cor[v] == 'BRANCO') {
                         cor[v] = 'CINZA';
                         d[v] = d[u] + 1;
-                        //caminho.push(u);
                         pi[v] = u;
                         fila.enqueue(v);
                     }
@@ -123,19 +108,25 @@ class Busca {
             }
             cor[u] = 'PRETO';
         }
-        for (let u = 0; grafo.length; u++) {
-            let i=0;
-            let v = u;
-            while (i < d[u]) {
-                caminho.push(v);
-                v = pi[v]; i++;
-            }
-            console.log("Caminho do vertice "+u+" até "+raiz+" é: "+caminho+"<br>");
-            caminho.splice(0,caminho.length);
-        }
-        //console.log(pi);
-        
+
     }
+
+    caminhoBFS(grafo) {   //não ta funcionando pq pi[] (pai) está saindo errado
+        let caminho = [];
+        
+        for (let i = 0; i < grafo.length; i++) {
+            let pilha = [];
+            let u = i;
+            while (pi[i] != null) {
+                pilha.push(pi[u]);
+                u = pi[u];
+            }
+            pilha.push(d[i]);
+            caminho[i] = pilha.reverse;
+        }
+        return caminho;
+    }
+    
 }
 
 
@@ -165,5 +156,5 @@ class Queue {
 }
 
 // let obj = new Busca();
-// obj.chamarDFS(grafo);
-// obj.busca();
+// obj.chamarBFS(grafo);
+// //obj.busca();
