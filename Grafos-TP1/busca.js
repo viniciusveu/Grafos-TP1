@@ -3,7 +3,7 @@ let tempo, cor = [];
 let d = []; pi = [];
 let tempo_chegada = [];
 let tempo_finalizacao = [];
-
+let caminhoV = [];
 
 class Busca {
 
@@ -50,8 +50,8 @@ class Busca {
     dfs_visit(grafo, u, dest) {
         cor[u] = 'CINZA';
         if (dest != null) {
-            caminho.push(u);
-            if (u == dest) document.getElementById("caminho_result").innerHTML = "Caminho entre os vértices: " + caminho;
+            caminhoV.push(u);
+            if (u == dest) document.getElementById("caminho_result").innerHTML = caminhoV;
         }
         tempo_chegada[u] = tempo++;
         for (let v = 0; v < grafo.length; v++) {
@@ -63,6 +63,16 @@ class Busca {
         }
         tempo_finalizacao[u] = tempo++;
         cor[u] = 'PRETO';
+    }
+
+    caminhoDFS(grafo, u, v) {
+        for (let x = 0; x < grafo.length; x++) {
+            cor[x] = 'BRANCO';
+        }
+        
+        this.dfs_visit(grafo, u, v);
+        console.log(caminhoV);
+        
     }
 
 
