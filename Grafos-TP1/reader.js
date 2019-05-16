@@ -1,18 +1,21 @@
 const input = document.getElementById('txtToRead');
 
-input.addEventListener('change', (e) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-        const lines = reader.result.split('\n').map((line) => { 
-            return line.split(' ');
-        });
-        let matrizAdj = createMatrizAdj(lines);
-        console.log(matrizAdj);
-        
-    }
-    reader.readAsText(input.files[0]);
-}, false);
+const start = () => {
 
+    input.addEventListener('change', (e) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const lines = reader.result.split('\n').map((line) => { 
+                return line.split(' ');
+            });
+            let matrizAdj = createMatrizAdj(lines);
+            console.log(matrizAdj);
+            return matrizAdj;
+        }
+        reader.readAsText(input.files[0]);
+    }, false);
+    
+}
 
 
 

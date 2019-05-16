@@ -86,8 +86,6 @@
             </div>
 
     </reader>
-    <textarea id="grafo" name="grafo" rows="50" cols="20"></textarea>
-    <a href="#" class="btn" onclick="readText('#grafo')">AHHHHHH</a>
     <div class="container">
         <div class="divider"></div>
         <h3>Selecione o arquivo com o grafo desejado:</h3>
@@ -193,18 +191,19 @@
 
     </div>
 
+    <script src="reader.js"></script>
     <script>
-        const grafo =
+        /* const grafo =
             [[0, 0, 4, 23, 60],
             [0, 0, 0, 0, 0],
             [0, 0, 0, 4, 0],
             [0, 10, 0, 0, 0],
-            [0, 0, 15, 0, 0]];
+            [0, 0, 15, 0, 0]]; */
+            const grafo = start();
         execute($('body'));
         let objBusca = new Busca();
 
     </script>
-    <script src="reader.js"></script>
 </body>
 
 </html>
