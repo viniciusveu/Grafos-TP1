@@ -1,35 +1,69 @@
-
-const createMatrizAdj = (array) => {
-    let def = array[0];
-    let size = array[1];
-    let grafo = [];
-    let index = 2
-    while (index < array.length - 3) {
-        let i = array[index];
-        let j = array[index + 1];
-        let peso = array[index + 2]
-        console.log('i = ' + i);
-        console.log('j = ' + j);
-        console.log('peso = ' + peso);
-        index += 3;
-    }
-}
-
 const input = document.getElementById('txtToRead');
-console.log(input);
 
 input.addEventListener('change', (e) => {
-    console.log(input.files);
     const reader = new FileReader();
     reader.onload = () => {
         const lines = reader.result.split('\n').map((line) => { 
             return line.split(' ');
         });
-        console.log(lines);
+        let matrizAdj = createMatrizAdj(lines);
+        console.log(matrizAdj);
         
     }
     reader.readAsText(input.files[0]);
 }, false);
+
+
+
+
+const createMatrizAdj = (array) => {
+    let def = array[0];
+    let size = array[1];
+    let aux = [];
+    let grafo = [];
+    let matriz = [];
+    matriz = vai(matriz, size);
+    
+    for(i = 2; i < array.length; i++){
+        for (let j = 0; j < array.length; j++) {
+            aux.push(parseInt(array[i][j]));
+        }
+    }
+    
+    const connections = aux.filter(value => !Number.isNaN(value)); //retira os NaN
+    for(let i = 0; i < connections.length-2; i += 3){
+        let de = connections[i];
+        let para = connections[i+1];
+        let peso = connections[i+2];
+        if(typeof matriz[de] == 'undefined') matriz[de] = new Array(); 
+        matriz[de][para] = peso;
+    }
+    return matriz;
+}
+
+const vai = (matriz, qtvert) => {
+    var matriz = [qtvert];
+    matriz.fill(0, 0, qtvert);
+    for (let val in matriz) {
+        matriz[val] = [qtvert];
+        matriz[val].fill(0, 0, qtvert);
+    }
+    return matriz;
+}
+
+
+
+/* 
+0: ["0"]
+1: ["5"]
+2: (3) ["0", "2", "4"]
+3: (3) ["0", "4", "60"]
+4: (3) ["0", "3", "23"]
+5: (3) ["2", "3", "4"]
+6: (3) ["3", "1", "10"]
+7: (3) ["4", "2", "15"]
+8: [""]
+*/
 
 
 /*
