@@ -13,6 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="main.js"></script>
     <script src="busca.js"></script>
+
 </head>
 
 <body>
@@ -85,7 +86,8 @@
             </div>
 
     </reader>
-
+    <textarea id="grafo" name="grafo" rows="50" cols="20"></textarea>
+    <a href="#" class="btn" onclick="readText('#grafo')">AHHHHHH</a>
     <div class="container">
         <div class="divider"></div>
         <h3>Selecione o arquivo com o grafo desejado:</h3>
@@ -179,7 +181,7 @@
                     <p id="caminho_result">Caminho entre os vértices: </p>
                     <a onclick="objBusca.busca()" class="txt waves-effect waves-light btn-small">BUSCA</a>
                 </div>
-
+                
             </div>
         </div>
 
@@ -200,7 +202,9 @@
             [0, 0, 15, 0, 0]];
         execute($('body'));
         let objBusca = new Busca();
+
     </script>
+    <script src="reader.js"></script>
 </body>
 
 </html>
