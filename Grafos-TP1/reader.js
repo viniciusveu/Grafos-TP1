@@ -1,16 +1,21 @@
 const readText = (id) =>{
     let string = $(id).val();
+    // console.log(string);
     let stringArray = [];
     let finalArray = [];
-    for (let i = 0; i < string.length; i++)
-        stringArray.push(string[i].trim()); //separou 60 em 6 e 0
+    for (var i = 0; i < string.length; i++)
+        stringArray[i] = string[i].replace(/(\r\n|\n|\r)/gm," ");
+        if(string[i-1] != " "){
+            stringArray[i-1] += stringArray[i];
+        }
+        // stringArray.push(string[i].trim()); //separou 60 em 6 e 0
     for (let i = 0; i < stringArray.length; i++){
         if(stringArray[i] != "") {
             finalArray.push(stringArray[i]); 
         }
     }
-    console.log(finalArray);
-    createMatrizAdj(finalArray);
+    console.log(stringArray);
+    // createMatrizAdj(finalArray);
 }
 
 const createMatrizAdj = (array) => {
