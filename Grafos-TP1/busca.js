@@ -11,10 +11,13 @@ class Busca {
         let x = document.getElementById("op").value;
         let u = document.getElementById("u").value;
         let v = document.getElementById("v").value;
+        let result;
         //let x = 0, u = 4, v =1;
-        if (x == 0) this.caminhoDFS(grafo, u, v);
+        if (x == 0) result = this.caminhoDFS(grafo, u, v);
         else if (x == 1) this.caminhoBFS(grafo, u, v);
         else console.error();
+        result = caminhoV;
+        return result;
     }
 
     chamarDFS(grafo) {
@@ -37,27 +40,29 @@ class Busca {
         }
         for (let u = raiz; u < grafo.length; u++) {
             if (cor[u] == 'BRANCO') {
-                this.dfs_visit(grafo, u, null);
+                this.dfs_visit(grafo, u, null, null);
             }
         }
         for (let u = 0; u < raiz; u++) {
             if (cor[u] == 'BRANCO') {
-                this.dfs_visit(grafo, u, null);
+                this.dfs_visit(grafo, u, null, null);
             }
         }
     }
 
-    dfs_visit(grafo, u, dest) {
+    dfs_visit(grafo, u, dest, result) {
         cor[u] = 'CINZA';
         if (dest != null) {
             caminhoV.push(u);
-            if (u == dest) document.getElementById("caminho_result").innerHTML = caminhoV;
+            if (u == dest) { //bugado
+                return;
+            }
         }
         tempo_chegada[u] = tempo++;
         for (let v = 0; v < grafo.length; v++) {
             if (grafo[u][v] != 0) {
                 if (cor[v] == 'BRANCO') {
-                    this.dfs_visit(grafo, v, dest);
+                    this.dfs_visit(grafo, v, dest, result);
                 }
             }
         }
@@ -66,12 +71,12 @@ class Busca {
     }
 
     caminhoDFS(grafo, u, v) {
+        let result;
         for (let x = 0; x < grafo.length; x++) {
             cor[x] = 'BRANCO';
         }
         
-        this.dfs_visit(grafo, u, v);
-        console.log(caminhoV);
+        this.dfs_visit(grafo, u, v, result);
         
     }
 
@@ -92,7 +97,7 @@ class Busca {
     }
 
 
-    bfs(grafo, raiz) {
+    bfs(grafo, raiz, dest) {
 
         for (let i = 0; i < grafo.length; i++) {
             cor[i] = 'BRANCO';
@@ -113,6 +118,10 @@ class Busca {
                         d[v] = d[u] + 1;
                         pi[v] = u;
                         fila.enqueue(v);
+                        if (dest != null) {
+                            caminhoV.push(u);
+                            if (u == dest) document.getElementById("caminho_result").innerHTML = caminhoV;
+                        }
                     }
                 }
             }
@@ -121,20 +130,9 @@ class Busca {
 
     }
 
-    caminhoBFS(grafo) {   //não ta funcionando pq pi[] (pai) está saindo errado
-        let caminho = [];
-        
-        for (let i = 0; i < grafo.length; i++) {
-            let pilha = [];
-            let u = i;
-            while (pi[i] != null) {
-                pilha.push(pi[u]);
-                u = pi[u];
-            }
-            pilha.push(d[i]);
-            caminho[i] = pilha.reverse;
-        }
-        return caminho;
+    caminhoBFS(grafo, u, v) {   //não ta funcionando pq pi[] (pai) está saindo errado
+        this.bfs(grafo);
+        console.log(caminhoV);
     }
     
 }

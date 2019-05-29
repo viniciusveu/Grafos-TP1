@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script type="text/javascript" src="jquery.js"></script>
+    <script src="busca.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="main.js"></script>
-    <script src="busca.js"></script>
 
 </head>
 
@@ -67,7 +67,7 @@
                     <div class="modal-content row">
 
                         <h3>O que o programa faz?</h3>
-                        <p ></p>
+                        <p></p>
                         <ol>
                             <li> Lê arquivo com um grafo para ser representado por Matriz de Adjacência ou Lista de
                                 Adjacência; </li>
@@ -121,9 +121,6 @@
                     <li><a class="txt waves-effect waves-light btn-large col s12 modal-trigger"
                             href="#modalbusca">Caminho
                             entre dois vértices</a></li>
-                    <li><a class="txt waves-effect waves-light btn-large col s12 modal-trigger"
-                            href="#modalconexo">Verificar
-                            se é conexo</a></li>
                 </ul>
 
             </div>
@@ -170,38 +167,31 @@
                         <select id="op">
                             <option value="" disabled selected>Escolha uma opção</option>
                             <option value="0">DFS - Profundidade</option>
-                            <option value="1">BFS - Largura</option>
+                            <option value="1">BFS - Largura (Não implementado) </option>
                         </select>
                         <label>Selecione o algoritmo de busca</label>
                     </div>
-                    <p id="caminho_result">Caminho entre os vértices: </p>
-                    <a onclick="objBusca.busca()" class="txt waves-effect waves-light btn-small">BUSCA</a>
+                    <div id="caminho_result">Caminho entre os vértices: </div>
+                    <div id="caminho_result2"> </div>
+                    <a class="txt waves-effect waves-light btn-small" id="xbutton">BUSCA</a>
                 </div>
-                
-            </div>
-        </div>
-
-        <div id="modalconexo" class="modal">
-            <div class="modal-content">
 
             </div>
         </div>
+
 
     </div>
 
-    <script src="reader.js"></script>
     <script>
-        /* const grafo =
-            [[0, 0, 4, 23, 60],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 4, 0],
-            [0, 10, 0, 0, 0],
-            [0, 0, 15, 0, 0]]; */
-            const grafo = start();
-        execute($('body'));
-        let objBusca = new Busca();
+        var result = document.getElementById('caminho_result2');
+        var xbutton = document.getElementById('xbutton');
+        xbutton.addEventListener('click', () => {
+            result.innerHTML = objBusca.busca();
+            console.log(objBusca.busca());
 
+        }, false);
     </script>
+    <script src="reader.js"></script>
 </body>
 
 </html>

@@ -1,46 +1,50 @@
 const input = document.getElementById('txtToRead');
-
-const start = () => {
-
-    input.addEventListener('change', (e) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            const lines = reader.result.split('\n').map((line) => { 
-                return line.split(' ');
-            });
-            let matrizAdj = createMatrizAdj(lines);
-            console.log(matrizAdj);
-            return matrizAdj;
-        }
-        reader.readAsText(input.files[0]);
-    }, false);
-    
-}
-
+let objBusca = new Busca();
+let grafo;
+input.addEventListener('change', (e) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+        const lines = reader.result.split('\n').map((line) => {
+            return line.split(' ');
+        });
+        grafo = createMatrizAdj(lines);
+        console.log(grafo);
+        
+    }
+    reader.readAsText(input.files[0]);
+}, false);
 
 
 const createMatrizAdj = (array) => {
     let def = array[0];
     let size = array[1];
     let aux = [];
-    let grafo = [];
     let matriz = [];
     matriz = vai(matriz, size);
-    
-    for(i = 2; i < array.length; i++){
+    for (let i = 0; i < size; i++) {
+        if (typeof matriz[i] == 'undefined') matriz[i] = new Array();
+        for (let j = 0; j < size; j++) {
+            matriz[i].push(0);
+        }
+
+    }
+
+    for (i = 2; i < array.length; i++) {
         for (let j = 0; j < array.length; j++) {
             aux.push(parseInt(array[i][j]));
         }
     }
-    
+
     const connections = aux.filter(value => !Number.isNaN(value)); //retira os NaN
-    for(let i = 0; i < connections.length-2; i += 3){
+    for (let i = 0; i < connections.length - 2; i += 3) {
         let de = connections[i];
-        let para = connections[i+1];
-        let peso = connections[i+2];
-        if(typeof matriz[de] == 'undefined') matriz[de] = new Array(); 
+        let para = connections[i + 1];
+        let peso = connections[i + 2];
+        // if (typeof matriz[de] == 'undefined') matriz[de] = new Array();
         matriz[de][para] = peso;
     }
+    matriz[0].pop();
+    //console.log(matriz);
     return matriz;
 }
 
